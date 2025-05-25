@@ -10,9 +10,12 @@
     ghostty = {
       url = "github:ghostty-org/ghostty";
     };
+    nixGL = {
+      url = "github:guibou/nixGL";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ghostty, ... }:
+  outputs = { self, nixpkgs, home-manager, ghostty, nixGL, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { 
@@ -25,6 +28,7 @@
       homeConfigurations = {
         "patrik" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+          extraSpecialArgs = { inherit nixGL; };
           modules = [ ./home.nix ];
         };
       };

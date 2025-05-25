@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, nixGL, ... }:
 
 {
   home.username = "patrik";
@@ -10,12 +10,15 @@
   home.packages = with pkgs; [
     git
     neovim
-	tree
-	clang
-	clang-tools
-	valgrind
-	gdb
-	ghostty
+    tree
+    clang
+    clang-tools
+    valgrind
+    gdb
+    # Wrap ghostty with nixGL
+    (pkgs.writeShellScriptBin "ghostty" ''
+      exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
+    '')
   ];
 
   programs.git = {
