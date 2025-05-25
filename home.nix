@@ -12,6 +12,9 @@
     neovim
     tmux
 	clang
+	clang-tools
+	valgrind
+	gdb
   ];
 
   programs.git = {
