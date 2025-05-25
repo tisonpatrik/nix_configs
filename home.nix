@@ -11,6 +11,7 @@
     git
     neovim
     tmux
+	clang
   ];
 
   programs.git = {
