@@ -15,6 +15,7 @@
 	clang-tools
 	valgrind
 	gdb
+	ghostty
   ];
 
   programs.git = {
