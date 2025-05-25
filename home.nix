@@ -10,7 +10,7 @@
   home.packages = with pkgs; [
     git
     neovim
-    tmux
+	tree
 	clang
 	clang-tools
 	valgrind
