@@ -8,18 +8,29 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    # Version Control
     git
+
+    # System Utilities
     tree
+    direnv
+
+    # Clang
     clang
     clang-tools
     valgrind
     gdb
-    fzf
-    zoxide
+    
+    # Development Tools
     lazydocker
     lazygit
-    direnv
 
+    # Shell Enhancement Tools
+    fzf
+    zoxide
+	
+	signal-desktop
+    # Applications with nixGL wrapper
     (pkgs.writeShellScriptBin "ghostty" ''
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
     '')
