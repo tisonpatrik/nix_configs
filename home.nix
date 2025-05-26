@@ -4,7 +4,7 @@
   home.username = "patrik";
   home.homeDirectory = "/home/patrik";
   home.stateVersion = "24.05";
-
+  targets.genericLinux.enable = true;
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
@@ -29,7 +29,9 @@
     fzf
     zoxide
 	
+	# Apps 
 	signal-desktop
+
     # Applications with nixGL wrapper
     (pkgs.writeShellScriptBin "ghostty" ''
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
