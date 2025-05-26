@@ -16,6 +16,9 @@
     gdb
     fzf
     zoxide
+    lazydocker
+    lazygit
+    direnv
 
     (pkgs.writeShellScriptBin "ghostty" ''
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
