@@ -15,6 +15,8 @@
     clang-tools
     valgrind
     gdb
+    fzf
+    zoxide
     # Wrap ghostty with nixGL
     (pkgs.writeShellScriptBin "ghostty" ''
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
@@ -25,5 +27,13 @@
     enable = true;
     userName = "tisonpatrik";
     userEmail = "patriktison@gmail.com";
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    options = [
+      "--cmd cd"
+    ];
   };
 }
