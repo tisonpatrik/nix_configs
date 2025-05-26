@@ -14,6 +14,7 @@
     # System Utilities
     tree
     direnv
+	flameshot
 
     # Clang
     clang
