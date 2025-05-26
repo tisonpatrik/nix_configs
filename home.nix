@@ -9,7 +9,6 @@
 
   home.packages = with pkgs; [
     git
-    neovim
     tree
     clang
     clang-tools
@@ -17,7 +16,7 @@
     gdb
     fzf
     zoxide
-    # Wrap ghostty with nixGL
+
     (pkgs.writeShellScriptBin "ghostty" ''
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
     '')
@@ -27,13 +26,26 @@
     enable = true;
     userName = "tisonpatrik";
     userEmail = "patriktison@gmail.com";
+    extraConfig = {
+      core.editor = "nvim";
+    };
   };
 
   programs.zoxide = {
     enable = true;
     enableZshIntegration = true;
-    options = [
-      "--cmd cd"
-    ];
+    options = [ "--cmd cd" ];
+  };
+
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 }
