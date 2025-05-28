@@ -25,6 +25,7 @@
     # Development Tools
     lazydocker
     lazygit
+    devenv
 
     # Shell Enhancement Tools
     fzf
