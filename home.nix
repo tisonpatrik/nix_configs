@@ -21,11 +21,14 @@
     clang-tools
     valgrind
     gdb
+
+    # Go
+    go
     
     # Development Tools
     lazydocker
     lazygit
-    devenv
+    
 
     # Shell Enhancement Tools
     fzf
