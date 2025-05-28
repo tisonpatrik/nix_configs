@@ -25,6 +25,11 @@
     # Go
     go
     
+    # Python
+    python3Full
+    uv
+
+
     # Development Tools
     lazydocker
     lazygit
