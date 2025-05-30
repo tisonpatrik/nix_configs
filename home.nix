@@ -1,5 +1,8 @@
 { config, pkgs, nixGL, ... }:
 
+let
+  pythonWithPip = pkgs.python3.withPackages (ps: with ps; [ pip ]);
+in
 {
   home.username = "patrik";
   home.homeDirectory = "/home/patrik";
@@ -14,7 +17,7 @@
     # System Utilities
     tree
     direnv
-	flameshot
+    flameshot
 
     # Clang
     clang
@@ -24,23 +27,21 @@
 
     # Go
     go
-    
-    # Python
-    python3Full
-    uv
 
+    # Python
+    pythonWithPip
+    uv
 
     # Development Tools
     lazydocker
     lazygit
-    
 
     # Shell Enhancement Tools
     fzf
     zoxide
-	
-	# Apps 
-	signal-desktop
+
+    # Apps 
+    signal-desktop
 
     # Applications with nixGL wrapper
     (pkgs.writeShellScriptBin "ghostty" ''
