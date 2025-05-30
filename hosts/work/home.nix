@@ -50,6 +50,7 @@ in
     # Shell Enhancement Tools
     fzf
     zoxide
+    oh-my-posh  # For your zen.toml prompt theme
 
     # Work Apps (minimal personal apps)
     # signal-desktop  # Commented out for work setup
@@ -95,12 +96,26 @@ in
     enableZshIntegration = true;
   };
 
-  # Zsh configuration
+  # Zsh configuration - integrate with existing dotfiles
   programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    
+    # Integration with your existing .zshrc
+    initExtra = ''
+      # Source your existing dotfiles configuration
+      if [ -f "$HOME/dotfiles/.zshrc" ]; then
+        source "$HOME/dotfiles/.zshrc"
+      fi
+    '';
+    
+    # Basic shell options (your .zshrc will override if needed)
+    history = {
+      size = 10000;
+      path = "$HOME/.zsh_history";
+    };
   };
 
   # Font configuration

@@ -8,3 +8,6 @@ home-manager generations
 
 # Clean up
 nix-collect-garbage -d
+
+
+
