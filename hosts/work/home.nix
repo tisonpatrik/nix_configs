@@ -46,8 +46,7 @@ in
     # docker
     # awscli2
 
-
-    # Shell Enhancement Tools
+    # Shell Enhancement Tools (needed for your .zshrc)
     fzf
     zoxide
     oh-my-posh  # For your zen.toml prompt theme
@@ -78,11 +77,12 @@ in
     };
   };
 
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    options = [ "--cmd cd" ];
-  };
+  # Commented out - zoxide is configured in .zshrc with custom options
+  # programs.zoxide = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   options = [ "--cmd cd" ];
+  # };
 
   programs.neovim = {
     enable = true;
@@ -91,27 +91,30 @@ in
     vimAlias = true;
   };
 
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  # Commented out - fzf is configured in .zshrc with custom key bindings
+  # programs.fzf = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  # };
 
   # Zsh configuration - integrate with existing dotfiles
   programs.zsh = {
     enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
+    # Disable these since they're handled by zinit in your .zshrc
+    enableCompletion = false;  # Handled by zinit with zsh-completions
+    autosuggestion.enable = false;  # Handled by zinit with zsh-autosuggestions  
+    syntaxHighlighting.enable = false;  # Handled by zinit with zsh-syntax-highlighting
     
     # Integration with your existing .zshrc
-    initExtra = ''
+    initContent = ''
       # Source your existing dotfiles configuration
-      if [ -f "$HOME/dotfiles/.zshrc" ]; then
-        source "$HOME/dotfiles/.zshrc"
+      if [ -f "$HOME/nixos-config/dotfiles/zsh/.zshrc" ]; then
+        source "$HOME/nixos-config/dotfiles/zsh/.zshrc"
       fi
     '';
     
-    # Basic shell options (your .zshrc will override if needed)
+    # Let your .zshrc handle history configuration via HISTSIZE, HISTFILE, etc.
+    # Only set basic fallbacks here
     history = {
       size = 10000;
       path = "$HOME/.zsh_history";
