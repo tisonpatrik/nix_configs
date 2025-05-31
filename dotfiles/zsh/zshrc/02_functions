@@ -1,9 +1,11 @@
 # Custom shell functions
 
 # Cursor function - launch cursor editor in background
-function cursor {
-	nohup /home/patrik/Applications/cursor.appimage "$@" > /dev/null 2>&1 & disown
+cursor() {
+  nohup /home/patrik/.nix-profile/bin/cursor "$@" > /dev/null 2>&1 &
+  disown
 }
+
 
 # Docker purge function - completely clean Docker system
 function docker_purge {

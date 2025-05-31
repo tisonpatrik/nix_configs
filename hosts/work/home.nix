@@ -21,6 +21,7 @@ in
     # System Utilities
     tree
     direnv
+    btop
 
     # Fonts
     fontconfig
