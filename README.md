@@ -1,5 +1,7 @@
-# New generatrion
+# Update of packages
+nix flake update
 
+# New generatrion
 home-manager switch --flake .#patrik
 
 # Rollback 
