@@ -17,7 +17,7 @@ in
   home.packages = with pkgs; [
     # Version Control
     git
-
+    
     # System Utilities
     tree
     direnv
