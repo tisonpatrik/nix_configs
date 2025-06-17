@@ -45,8 +45,11 @@ in
     lazydocker
     lazygit
     
+    # Docker
+    docker
+    docker-compose
+
     # Work-specific tools
-    # docker
     # awscli2
 
     # Work Apps (minimal personal apps)

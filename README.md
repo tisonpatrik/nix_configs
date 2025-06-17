@@ -2,7 +2,7 @@
 nix flake update
 
 # New generatrion
-home-manager switch --flake .#patrik
+home-manager switch --flake .#patrik@work
 
 # Rollback 
 home-manager generations
