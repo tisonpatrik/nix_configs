@@ -1,5 +1,4 @@
-{ config, pkgs, nixGL, ... }:
-
+{ config, pkgs, nixGL, zen_browser, ... }:
 let
   pythonWithPip = pkgs.python3.withPackages (ps: with ps; [ pip ]);
 in

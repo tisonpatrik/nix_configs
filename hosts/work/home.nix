@@ -1,4 +1,4 @@
-{ config, pkgs, nixGL, ... }:
+{ config, pkgs, nixGL, zen-browser ? null, ... }:
 
 let
   pythonWithPip = pkgs.python3.withPackages (ps: with ps; [ pip ]);
@@ -17,7 +17,7 @@ in
   home.packages = with pkgs; [
     # Version Control
     git
-    
+
     # System Utilities
     tree
     direnv
@@ -44,16 +44,12 @@ in
     # Development Tools
     lazydocker
     lazygit
-    
-    # Docker
-    docker
-    docker-compose
 
-    # Work-specific tools
-    # awscli2
+    # Browser
+    zen-browser.packages.${pkgs.system}.default
 
     # Work Apps (minimal personal apps)
-    # signal-desktop  # Commented out for work setup
+    signal-desktop
 
     # Cursor Editor (with nixGL wrapper)
     code-cursor
@@ -72,7 +68,7 @@ in
   programs.git = {
     enable = true;
     userName = "tisonpatrik";
-    userEmail = "patriktison@gmail.com";  # Consider using work email here
+    userEmail = "patriktison@gmail.com";
     extraConfig = {
       core.editor = "nvim";
     };
@@ -85,9 +81,13 @@ in
     vimAlias = true;
   };
 
-
   # Font configuration
   fonts.fontconfig.enable = true;
-} 
 
-
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+  };
+}

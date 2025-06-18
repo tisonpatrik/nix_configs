@@ -20,41 +20,33 @@
     nixGL = {
       url = "github:guibou/nixGL";
     };
+
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ghostty, nixGL, ... }:
-    let
-      # =================== Helper Functions =================== #
-      system = "x86_64-linux";
-      
-      pkgsFor = system: import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-            "cursor"
-          ];
-        };
-        overlays = [
-          ghostty.overlays.default
-        ];
+  outputs = { self, nixpkgs, home-manager, ghostty, nixGL, zen-browser, ... }:
+  let
+    system = "x86_64-linux";
+    pkgsFor = system: import nixpkgs {
+      inherit system;
+      config = {
+        allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "cursor" ];
       };
-
-      mkHome = system: modules: home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsFor system;
-        extraSpecialArgs = { inherit nixGL; };
-        modules = modules;
-      };
-
-    in {
-      # ================ Home Manager Configurations ================ #
-      homeConfigurations = {
-        "patrik@home" = mkHome system [ ./hosts/home/home.nix ];
-        "patrik@work" = mkHome system [ ./hosts/work/home.nix ];
-        
-        # ====================== Legacy config ====================== #
-        # Keep the original for backward compatibility
-        "patrik" = mkHome system [ ./home.nix ];
-      };
-
+      overlays = [ ghostty.overlays.default ];
     };
+    mkHome = sys: mods: home-manager.lib.homeManagerConfiguration {
+      pkgs = pkgsFor sys;
+      extraSpecialArgs = { inherit nixGL zen-browser; };
+      modules = mods;
+    };
+  in {
+    homeConfigurations = {
+      "patrik@work" = mkHome system [ ./hosts/work/home.nix ];
+      "patrik@home" = mkHome system [ ./hosts/home/home.nix ];
+      "patrik" = mkHome system [ ./home.nix ];
+    };
+  };
 }
