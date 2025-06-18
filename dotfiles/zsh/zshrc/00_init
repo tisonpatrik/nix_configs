@@ -1,3 +1,36 @@
+# Ensure system paths are always included and deduplicated
+typeset -U path PATH
+
+# Define default paths in order of precedence
+path=(
+  # Nix paths
+  $HOME/.nix-profile/bin
+  /nix/var/nix/profiles/default/bin
+  
+  # User paths
+  $HOME/.local/bin
+  $HOME/bin
+  
+  # FZF path (if needed)
+  $HOME/.fzf/bin
+  
+  # System paths
+  /usr/local/bin
+  /usr/bin
+  /bin
+  /usr/sbin
+  /sbin
+  
+  # Keep existing paths
+  $path
+)
+
+# Export PATH for non-interactive shells
+export PATH
+
+# Ensure SHELL is set to Nix-managed zsh
+export SHELL="$HOME/.nix-profile/bin/zsh"
+
 # Set the directory we want to store zinit and plugins
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 

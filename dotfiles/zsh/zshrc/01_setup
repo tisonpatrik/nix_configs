@@ -1,8 +1,3 @@
-#bin path
-export PATH="$HOME/.fzf/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
-export SHELL="/home/patrik/.nix-profile/bin/zsh"
 
 # Keybindings
 bindkey -e

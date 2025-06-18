@@ -1,7 +1,8 @@
-{ config, pkgs, nixGL, zen-browser ? null, ... }:
+{ config, pkgs, nixGL, ... }:
 
 let
   pythonWithPip = pkgs.python3.withPackages (ps: with ps; [ pip ]);
+  lib = pkgs.lib;
 in
 {
   imports = [
@@ -44,12 +45,14 @@ in
     # Development Tools
     lazydocker
     lazygit
+    
+    # Work-specific tools
+    # awscli2
+    # docker
 
-    # Browser
-    zen-browser.packages.${pkgs.system}.default
 
     # Work Apps (minimal personal apps)
-    signal-desktop
+    # signal-desktop  # Commented out for work setup
 
     # Cursor Editor (with nixGL wrapper)
     code-cursor
@@ -68,7 +71,7 @@ in
   programs.git = {
     enable = true;
     userName = "tisonpatrik";
-    userEmail = "patriktison@gmail.com";
+    userEmail = "patriktison@gmail.com";  # Consider using work email here
     extraConfig = {
       core.editor = "nvim";
     };
