@@ -47,9 +47,10 @@ in
     lazygit
     
     # Work-specific tools
+    k9s
     # awscli2
     # docker
-
+    
 
     # Work Apps (minimal personal apps)
     # signal-desktop  # Commented out for work setup
