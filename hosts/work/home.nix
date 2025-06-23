@@ -45,7 +45,7 @@ in
     # Development Tools
     lazydocker
     lazygit
-    
+	go-migrate    
     # Work-specific tools
     k9s
     # awscli2
