@@ -22,7 +22,7 @@ in
     # System Utilities
     tree
     direnv
-    btop
+    bottom
 
     # Fonts
     fontconfig
