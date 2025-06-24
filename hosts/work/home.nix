@@ -37,15 +37,17 @@ in
 
     # Go
     go
-
-    # Python
+	air
+	buf
+    
+	# Python
     pythonWithPip
     uv
 
     # Development Tools
     lazydocker
     lazygit
-	go-migrate    
+	
     # Work-specific tools
     k9s
     # awscli2
