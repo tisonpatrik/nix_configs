@@ -23,6 +23,7 @@ in
     tree
     direnv
     bottom
+    fastfetch
 
     # Fonts
     fontconfig
@@ -46,6 +47,7 @@ in
 
     # JS
     nodejs_24
+	yarn
 
     # Development Tools
     lazydocker
