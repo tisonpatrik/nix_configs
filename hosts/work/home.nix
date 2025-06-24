@@ -37,12 +37,15 @@ in
 
     # Go
     go
-	air
-	buf
+    air
+    buf
     
-	# Python
+	  # Python
     pythonWithPip
     uv
+
+    # JS
+    nodejs_24
 
     # Development Tools
     lazydocker
