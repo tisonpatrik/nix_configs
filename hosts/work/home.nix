@@ -47,7 +47,7 @@ in
 
     # JS
     nodejs_24
-	yarn
+	  yarn
 
     # Development Tools
     lazydocker
@@ -58,6 +58,8 @@ in
     # awscli2
     # docker
     
+    # Networking
+    wireguard-tools
 
     # Work Apps (minimal personal apps)
     # signal-desktop  # Commented out for work setup
