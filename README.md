@@ -1,32 +1,31 @@
-# NixOS Configuration
+# Pop!_OS Configuration
 
-This repository contains my NixOS and Home Manager configuration for managing my development environment across different machines.
+This repository contains my Home Manager configuration for managing my development environment on Pop!_OS.
 
 ## 🚀 Quick Setup for New PC
 
 ### 1. Install Nix Package Manager
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
 ```
 
-### 2. Enable Flakes (Required)
+**Note**: This installs Determinate Nix with flakes enabled by default. If you prefer upstream Nix, use:
 ```bash
-mkdir -p ~/.config/nix
-echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install
 ```
 
-### 3. Restart your shell
+### 2. Restart your shell
 ```bash
 source /etc/profile.d/nix.sh
 ```
 
-### 4. Clone this repository
+### 3. Clone this repository
 ```bash
 git clone https://github.com/yourusername/nixos-config.git ~/nixos-config
 cd ~/nixos-config
 ```
 
-### 5. Initialize Home Manager with Flakes
+### 4. Initialize Home Manager with Flakes
 ```bash
 # For unstable/master branch
 nix run home-manager/master -- init --switch
@@ -35,7 +34,7 @@ nix run home-manager/master -- init --switch
 nix run home-manager/release-25.05 -- init --switch
 ```
 
-### 6. Switch to your desired profile
+### 5. Switch to your desired profile
 ```bash
 # Work profile (includes WireGuard tools)
 home-manager switch --flake .#patrik@work
@@ -76,6 +75,16 @@ home-manager generations
 nix-collect-garbage -d
 ```
 
+### Upgrade Nix (if using Determinate Nix)
+```bash
+sudo determinate-nixd upgrade
+```
+
+### Upgrade Nix (if using upstream Nix)
+```bash
+sudo -i nix upgrade-nix
+```
+
 ## 🛠️ What's Included
 
 ### Development Tools
@@ -97,6 +106,28 @@ nix-collect-garbage -d
 ## 📝 Notes
 
 - This configuration uses **Nix Flakes** for reproducible builds
+- **Determinate Nix Installer** enables flakes by default, so no manual configuration is needed
 - **WireGuard tools** are included in the work profile
-- **nixGL wrappers** are used for GPU-accelerated applications on non-NixOS systems
+- **nixGL wrappers** are used for GPU-accelerated applications on Pop!_OS
 - Configuration integrates with existing dotfiles in `~/dotfiles/`
+
+## 🔧 Troubleshooting
+
+### Non-interactive installation
+If you need to install without confirmation prompts:
+```bash
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate --no-confirm
+```
+
+### Container/Docker environments
+For containers without systemd, use:
+```bash
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install linux --init none --no-confirm
+```
+
+### WSL2 without systemd
+If you can't enable systemd in WSL2:
+```bash
+curl -fsSL https://install.determinate.systems/nix | sh -s -- install linux --init none
+```
+**Note**: When using `--init none`, only root can run Nix commands with `sudo -i nix run nixpkgs#hello`
