@@ -84,7 +84,7 @@ in
     syntaxHighlighting.enable = true;
     
     # Integration with your existing .zshrc
-    initExtra = ''
+    initContent = ''
       # Source your existing dotfiles configuration
       if [ -f "$HOME/dotfiles/.zshrc" ]; then
         source "$HOME/dotfiles/.zshrc"
