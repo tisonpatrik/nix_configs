@@ -16,24 +16,6 @@ curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determin
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install
 ```
 
-#### Option B: Upstream Nix
-```bash
-sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
-```
-
-**Note**: If using upstream Nix, you'll need to enable experimental features manually:
-
-1. **Enable flakes** by adding to `/etc/nix/nix.conf`:
-   ```bash
-   sudo mkdir -p /etc/nix
-   echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-   ```
-
-2. **Restart the Nix daemon**:
-   ```bash
-   sudo systemctl restart nix-daemon
-   ```
-
 ### 2. Restart your shell
 ```bash
 source /etc/profile.d/nix.sh
@@ -138,26 +120,6 @@ If you need to install without confirmation prompts:
 ```bash
 curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate --no-confirm
 ```
-
-### Upstream Nix installation issues
-If you encounter issues with upstream Nix installation:
-
-1. **Check if Nix daemon is running**:
-   ```bash
-   sudo systemctl status nix-daemon
-   ```
-
-2. **Manually enable experimental features** (if not done during installation):
-   ```bash
-   sudo mkdir -p /etc/nix
-   echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
-   sudo systemctl restart nix-daemon
-   ```
-
-3. **Verify flakes are enabled**:
-   ```bash
-   nix flake --version
-   ```
 
 ### Container/Docker environments
 For containers without systemd, use:
