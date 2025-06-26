@@ -33,7 +33,13 @@
     pkgsFor = system: import nixpkgs {
       inherit system;
       config = {
-        allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "cursor" ];
+        # Explicitly allow unfree packages that are used in this configuration
+        allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ 
+          "cursor"           # Cursor editor (unfree)
+          "signal-desktop"   # Signal messaging app (unfree)
+          "ghostty"          # Ghostty terminal (unfree)
+          "zen-browser"      # Zen browser (unfree)
+        ];
       };
       overlays = [ ghostty.overlays.default ];
     };

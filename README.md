@@ -6,14 +6,17 @@ This repository contains my Home Manager configuration for managing my developme
 
 ### 1. Install Nix Package Manager
 
-#### Option A: Determinate Nix (Recommended)
+#### Classic Nix Installer
 ```bash
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon
 ```
 
-**Note**: This installs Determinate Nix with flakes enabled by default. If you prefer upstream Nix, use:
+**Note**: This installs the classic Nix package manager. After installation, you'll need to enable flakes manually by adding the following to your shell configuration:
+
 ```bash
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+# Add to ~/.bashrc, ~/.zshrc, or ~/.profile
+mkdir -p ~/.config/nix
+echo 'experimental-features = nix-command flakes' >> ~/.config/nix/nix.conf
 ```
 
 ### 2. Restart your shell
@@ -77,12 +80,7 @@ home-manager generations
 nix-collect-garbage -d
 ```
 
-### Upgrade Nix (if using Determinate Nix)
-```bash
-sudo determinate-nixd upgrade
-```
-
-### Upgrade Nix (if using upstream Nix)
+### Upgrade Nix (Classic Nix)
 ```bash
 sudo -i nix upgrade-nix
 ```
@@ -108,7 +106,8 @@ sudo -i nix upgrade-nix
 ## 📝 Notes
 
 - This configuration uses **Nix Flakes** for reproducible builds
-- **Determinate Nix Installer** enables flakes by default, so no manual configuration is needed
+- **Classic Nix Installer** requires manual flakes configuration
+- **Unfree packages** (Cursor, Signal Desktop, Ghostty, Zen Browser) are explicitly allowed via `allowUnfreePredicate` in `flake.nix`
 - **WireGuard tools** are included in the work profile
 - **nixGL wrappers** are used for GPU-accelerated applications on Pop!_OS
 - Configuration integrates with existing dotfiles in `~/dotfiles/`
@@ -118,18 +117,18 @@ sudo -i nix upgrade-nix
 ### Non-interactive installation
 If you need to install without confirmation prompts:
 ```bash
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install --determinate --no-confirm
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --daemon --no-daemon
 ```
 
 ### Container/Docker environments
 For containers without systemd, use:
 ```bash
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install linux --init none --no-confirm
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
 ```
 
 ### WSL2 without systemd
 If you can't enable systemd in WSL2:
 ```bash
-curl -fsSL https://install.determinate.systems/nix | sh -s -- install linux --init none
+sh <(curl --proto '=https' --tlsv1.2 -L https://nixos.org/nix/install) --no-daemon
 ```
-**Note**: When using `--init none`, only root can run Nix commands with `sudo -i nix run nixpkgs#hello`
+**Note**: When using `--no-daemon`, only root can run Nix commands with `sudo -i nix run nixpkgs#hello`
