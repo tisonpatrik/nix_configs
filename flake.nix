@@ -60,7 +60,7 @@
       "patrik@home" = mkHome system [ ./hosts/home/home.nix ];
       "patrik" = mkHome system [ ./home.nix ];
     };
-
+    
     # System-level configurations for managing shell and system packages
     systemConfigs = {
       default = system-manager.lib.makeSystemConfig {
