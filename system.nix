@@ -97,11 +97,50 @@
       '';
     };
 
-    # Docker setup service
+    # Docker daemon service (nix-managed)
+    systemd.services.docker = {
+      enable = true;
+      description = "Docker Application Container Engine";
+      documentation = [ "https://docs.docker.com" ];
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        Type = "notify";
+        Environment = [
+          "PATH=${lib.makeBinPath [
+            pkgs.docker
+            pkgs.coreutils
+            pkgs.kmod
+          ]}:/usr/bin:/sbin"
+        ];
+        ExecStart = "${pkgs.docker}/bin/dockerd";
+        ExecStartPost = [
+          "${pkgs.coreutils}/bin/chmod 666 /var/run/docker.sock"
+          "${pkgs.coreutils}/bin/chown root:docker /var/run/docker.sock"
+        ];
+        ExecReload = "${pkgs.coreutils}/bin/kill -s HUP $MAINPID";
+        TimeoutStartSec = 0;
+        RestartSec = 2;
+        Restart = "always";
+        StartLimitBurst = 3;
+        StartLimitInterval = "60s";
+        LimitNOFILE = "infinity";
+        LimitNPROC = "infinity";
+        LimitCORE = "infinity";
+        TasksMax = "infinity";
+        Delegate = true;
+        KillMode = "process";
+        OOMScoreAdjust = -500;
+      };
+    };
+
+    # Docker setup service (simplified)
     systemd.services.docker-setup = {
-      description = "Setup Docker daemon and user permissions";
+      description = "Setup Docker group and user permissions";
       enable = true;
       wantedBy = [ "system-manager.target" ];
+      before = [ "docker.service" ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
@@ -125,15 +164,16 @@
         # Ensure docker directory exists
         mkdir -p /etc/docker
 
-        # Start docker daemon if not running (Pop!_OS specific)
-        if ! systemctl is-active --quiet docker 2>/dev/null; then
-          echo "Docker daemon not running via system systemd, trying to start..."
-          # On Pop!_OS, we might need to enable the system docker service
-          if systemctl list-unit-files | grep -q docker.service; then
-            systemctl enable docker.service || true
-            systemctl start docker.service || true
-          fi
+        # Disable system docker service if it exists to avoid conflicts
+        if systemctl list-unit-files | grep -q "^docker.service"; then
+          echo "Disabling system docker service to avoid conflicts..."
+          systemctl disable docker.service || true
+          systemctl stop docker.service || true
         fi
+        
+        # Enable our nix-managed docker service for auto-start
+        echo "Enabling nix-managed docker service for auto-start..."
+        systemctl enable docker.service || true
       '';
     };
   };
