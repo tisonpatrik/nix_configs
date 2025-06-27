@@ -26,8 +26,8 @@ source /etc/profile.d/nix.sh
 
 ### 3. Clone this repository
 ```bash
-git clone https://github.com/yourusername/nixos-config.git ~/nixos-config
-cd ~/nixos-config
+git clone https://github.com/yourusername/nix-config.git ~/repos/personal/nix-config
+cd ~/repos/personal/nix-config
 ```
 
 ### 4. Initialize Home Manager with Flakes
