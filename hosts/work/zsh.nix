@@ -15,9 +15,9 @@
     syntaxHighlighting.enable = true;
 
     initContent = ''
-      # Source your existing dotfiles configuration
-      if [ -f "$HOME/repos/personal/nix-config/dotfiles/zsh/.zshrc" ]; then
-        source "$HOME/repos/personal/nix-config/dotfiles/zsh/.zshrc"
+      # Source your existing dotfiles configuration (managed by Stow)
+      if [ -f "$HOME/.zshrc" ]; then
+        source "$HOME/.zshrc"
       fi
     '';
 

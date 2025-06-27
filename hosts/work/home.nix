@@ -5,9 +5,9 @@ let
   lib = pkgs.lib;
 in
 {
-  imports = [
-    ./zsh.nix
-  ];
+  # imports = [
+  #   ./zsh.nix  # Zsh now managed by Stow, not Home Manager
+  # ];
 
   home.username = "patrik";
   home.homeDirectory = "/home/patrik";
@@ -24,6 +24,13 @@ in
     direnv
     bottom
     fastfetch
+    stow
+
+    # Shell Enhancement Tools
+    zsh
+    fzf
+    zoxide
+    oh-my-posh
 
     # Fonts
     fontconfig
@@ -96,4 +103,20 @@ in
 
   # Font configuration
   fonts.fontconfig.enable = true;
+
+  # Automatic Stow activation
+  home.activation = {
+    stowDotfiles = config.lib.dag.entryAfter ["writeBoundary"] ''
+      echo "🔗 Setting up dotfiles with Stow..."
+      
+      # Check if the stow-dotfiles directory exists
+      if [ -d "${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles" ]; then
+        cd ${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles
+        ${pkgs.stow}/bin/stow -t ${config.home.homeDirectory} zsh ohmyposh 2>/dev/null || true
+        echo "✅ Dotfiles stowed successfully"
+      else
+        echo "⚠️  Stow dotfiles directory not found, skipping setup"
+      fi
+    '';
+  };
 }

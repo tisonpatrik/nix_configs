@@ -25,9 +25,15 @@
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # ====================== System Manager ===================== #
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ghostty, nixGL, zen-browser,... }:
+  outputs = { self, nixpkgs, home-manager, ghostty, nixGL, zen-browser, system-manager, ... }:
   let
     system = "x86_64-linux";
     pkgsFor = system: import nixpkgs {
@@ -54,6 +60,14 @@
       "patrik@home" = mkHome system [ ./hosts/home/home.nix ];
       "patrik" = mkHome system [ ./home.nix ];
     };
-    
+
+    # System-level configurations for managing shell and system packages
+    systemConfigs = {
+      default = system-manager.lib.makeSystemConfig {
+        modules = [
+          ./system.nix
+        ];
+      };
+    };
   };
 }

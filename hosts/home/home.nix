@@ -17,6 +17,7 @@ in
     tree
     direnv
     flameshot
+    stow
 
     # Clang
     clang
@@ -36,6 +37,7 @@ in
     lazygit
 
     # Shell Enhancement Tools
+    zsh
     fzf
     zoxide
     oh-my-posh
@@ -58,12 +60,6 @@ in
     };
   };
 
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    options = [ "--cmd cd" ];
-  };
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -71,30 +67,22 @@ in
     vimAlias = true;
   };
 
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
+  # All shell integrations (zsh, fzf, zoxide) are managed by Stow
+  # The activation script will create ~/.zshrc symlink via Stow
 
-  # Zsh configuration - integrate with existing dotfiles
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    
-    # Integration with your existing .zshrc
-    initContent = ''
-      # Source your existing dotfiles configuration
-      if [ -f "$HOME/dotfiles/.zshrc" ]; then
-        source "$HOME/dotfiles/.zshrc"
+  # Automatic Stow activation
+  home.activation = {
+    stowDotfiles = config.lib.dag.entryAfter ["writeBoundary"] ''
+      echo "🔗 Setting up dotfiles with Stow..."
+      
+      # Check if the stow-dotfiles directory exists
+      if [ -d "${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles" ]; then
+        cd ${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles
+        ${pkgs.stow}/bin/stow -t ${config.home.homeDirectory} zsh ohmyposh 2>/dev/null || true
+        echo "✅ Dotfiles stowed successfully"
+      else
+        echo "⚠️  Stow dotfiles directory not found, skipping setup"
       fi
     '';
-    
-    # Basic shell options (your .zshrc will override if needed)
-    history = {
-      size = 10000;
-      path = "$HOME/.zsh_history";
-    };
   };
 }

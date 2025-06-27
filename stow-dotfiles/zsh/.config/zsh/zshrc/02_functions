@@ -1,0 +1,18 @@
+# Custom shell functions
+
+# Cursor function - launch cursor editor in background
+cursor() {
+  nohup /home/patrik/.nix-profile/bin/cursor "$@" > /dev/null 2>&1 &
+  disown
+}
+
+
+# Docker purge function - completely clean Docker system
+function docker_purge {
+  echo "Purging Docker system completely..."
+  docker container rm -f $(docker container ls -aq 2>/dev/null) 2>/dev/null
+  docker image rm -f $(docker image ls -aq 2>/dev/null) 2>/dev/null
+  docker volume rm -f $(docker volume ls -q 2>/dev/null) 2>/dev/null
+  docker network rm $(docker network ls -q | grep -v '^bridge$\|^host$\|^none$') 2>/dev/null
+  echo "Done."
+} 
