@@ -58,23 +58,18 @@ backup-shells:
 
 # Status and maintenance
 status:
-	@echo "📊 Current Configuration Status:"
-	@echo ""
-	@echo "🏠 Home Manager:"
-	@home-manager generations | head -5
-	@echo ""
-	@echo "🖥️  Current Shell: $${SHELL}"
-	@echo "🔗 Zsh Location: $$(which zsh 2>/dev/null || echo 'Not found')"
-	@echo ""
-	@echo "📂 Stow Status:"
-	@ls -la ~/.zshrc ~/.config/zsh ~/.config/ohmyposh 2>/dev/null || echo "Stow links not found"
-	@echo ""
-	@echo "🔧 System Manager:"
-	@if command -v system-manager >/dev/null 2>&1; then \
-		system-manager --version; \
-	else \
-		echo "System Manager not installed"; \
-	fi
+	@echo "🔍 System Status Check"
+	@echo "===================="
+	@echo "📦 Current shell: $$(echo $$SHELL)"
+	@echo "🏠 Home Manager profile: $$(home-manager --version 2>/dev/null || echo 'Not installed')"
+	@echo "🔗 Stow symlinks:"
+	@ls -la ~/.zshrc ~/.config/zsh 2>/dev/null || echo "  No symlinks found"
+	@echo "🖥️  System Manager status:"
+	@sudo systemctl is-active system-manager.target 2>/dev/null || echo "  System Manager not active"
+	@echo "🐳 Docker status:"
+	@echo "  Docker version: $$(docker --version 2>/dev/null || echo 'Docker not available')"
+	@echo "  Docker daemon: $$(systemctl is-active docker 2>/dev/null || echo 'Not running via systemd')"
+	@echo "  User groups: $$(groups | grep -o docker || echo 'Not in docker group')"
 
 clean:
 	@echo "🧹 Cleaning up old generations..."

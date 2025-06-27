@@ -56,14 +56,15 @@ in
     nodejs_24
 	  yarn
 
-    # Development Tools
+    # Container & Development Tools
+    docker
+    docker-compose
     lazydocker
     lazygit
 	
     # Work-specific tools
     k9s
     # awscli2
-    # docker
     
     # Networking
     wireguard-tools

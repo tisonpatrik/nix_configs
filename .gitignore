@@ -1,1 +1,17 @@
+# Private/sensitive files
 *.private
+
+# Nix build artifacts
+result
+result-*
+
+# Direnv cache
+.direnv/
+
+# macOS
+.DS_Store
+
+# Temporary files
+*~
+*.swp
+*.swo
