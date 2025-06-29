@@ -3,6 +3,9 @@
   config = {
     nixpkgs.hostPlatform = "x86_64-linux";
     
+    # Allow unfree packages (needed for steam, mangohud, gamemode, protonup)
+    nixpkgs.config.allowUnfree = true;
+    
     # Allow system-manager to run on non-NixOS systems (Pop!_OS/Ubuntu)
     system-manager.allowAnyDistro = true;
 
@@ -14,9 +17,15 @@
         zoxide
         oh-my-posh
         stow
+        tree
+        direnv
+        bottom
+        fastfetch
+    
         # Docker and container tools
         docker
         docker-compose
+
       ];
 
       # Add zsh to /etc/shells so it's recognized as a valid shell

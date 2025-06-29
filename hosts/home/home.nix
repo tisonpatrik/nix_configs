@@ -15,19 +15,6 @@ in
     # Version Control
     git
 
-    # System Utilities
-    tree
-    direnv
-    bottom
-    fastfetch
-    stow
-
-    # Shell Enhancement Tools
-    zsh
-    fzf
-    zoxide
-    oh-my-posh
-
     # Clang
     clang
     clang-tools
@@ -44,10 +31,7 @@ in
     pythonWithPip
     uv
 
-
     # Container & Development Tools
-    docker
-    docker-compose
     lazydocker
     lazygit
 
@@ -55,11 +39,7 @@ in
     signal-desktop
     foliate
     boxbuddy
-    gamemode
-    protonup
-    steam
-    mangohud
-
+    
     # Text Editors
     zed-editor
 
