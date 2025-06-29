@@ -37,8 +37,9 @@ in
     # Go
     go
     buf
+    air
     gopls
-    
+
     # Python
     pythonWithPip
     uv
@@ -49,15 +50,19 @@ in
     docker-compose
     lazydocker
     lazygit
-    
+
     # Work Apps (minimal personal apps)
     signal-desktop
     foliate
     boxbuddy
+    gamemode
+    protonup
+    steam
+    mangohud
 
     # Text Editors
     zed-editor
-    
+
     # Cursor Editor (with nixGL wrapper)
     code-cursor
     (pkgs.writeShellScriptBin "cursor-nixgl" ''
@@ -95,7 +100,7 @@ in
   home.activation = {
     stowDotfiles = config.lib.dag.entryAfter ["writeBoundary"] ''
       echo "🔗 Setting up dotfiles with Stow..."
-      
+
       # Check if the stow-dotfiles directory exists
       if [ -d "${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles" ]; then
         cd ${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles
@@ -105,5 +110,10 @@ in
         echo "⚠️  Stow dotfiles directory not found, skipping setup"
       fi
     '';
+  };
+
+
+  home.sessionVariables = {
+    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
   };
 }

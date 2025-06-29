@@ -45,6 +45,10 @@
           "signal-desktop"   # Signal messaging app (unfree)
           "ghostty"          # Ghostty terminal (unfree)
           "zen-browser"      # Zen browser (unfree)
+          "steam"            # Steam gaming platform (unfree)
+          "steam-original"   # Steam original package (unfree)
+          "steam-unwrapped"  # Steam unwrapped package (unfree)
+          "steam-run"        # Steam FHS environment (unfree)
         ];
       };
       overlays = [ ghostty.overlays.default ];

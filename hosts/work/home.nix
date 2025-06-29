@@ -5,9 +5,6 @@ let
   lib = pkgs.lib;
 in
 {
-  # imports = [
-  #   ./zsh.nix  # Zsh now managed by Stow, not Home Manager
-  # ];
 
   home.username = "patrik";
   home.homeDirectory = "/home/patrik";
@@ -40,9 +37,10 @@ in
 
     # Go
     go
-    air
     buf
-    
+    air
+    gopls
+
 	  # Python
     pythonWithPip
     uv
@@ -56,11 +54,11 @@ in
     docker-compose
     lazydocker
     lazygit
-	
+
     # Work-specific tools
     k9s
     awscli2
-    
+
     # Networking
     wireguard-tools
 
@@ -104,7 +102,7 @@ in
   home.activation = {
     stowDotfiles = config.lib.dag.entryAfter ["writeBoundary"] ''
       echo "🔗 Setting up dotfiles with Stow..."
-      
+
       # Check if the stow-dotfiles directory exists
       if [ -d "${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles" ]; then
         cd ${config.home.homeDirectory}/repos/nix_configs/stow-dotfiles
