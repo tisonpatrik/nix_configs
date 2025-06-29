@@ -1,6 +1,8 @@
 { config, pkgs, nixGL, zen_browser, ... }:
+
 let
   pythonWithPip = pkgs.python3.withPackages (ps: with ps; [ pip ]);
+  lib = pkgs.lib;
 in
 {
   home.username = "patrik";
@@ -16,8 +18,15 @@ in
     # System Utilities
     tree
     direnv
-    flameshot
+    bottom
+    fastfetch
     stow
+
+    # Shell Enhancement Tools
+    zsh
+    fzf
+    zoxide
+    oh-my-posh
 
     # Clang
     clang
@@ -27,25 +36,34 @@ in
 
     # Go
     go
-
+    buf
+    gopls
+    
     # Python
     pythonWithPip
     uv
 
-    # Development Tools
+
+    # Container & Development Tools
+    docker
+    docker-compose
     lazydocker
     lazygit
-
-    # Shell Enhancement Tools
-    zsh
-    fzf
-    zoxide
-    oh-my-posh
-
-    # Apps 
+    
+    # Work Apps (minimal personal apps)
     signal-desktop
 
-    # Applications with nixGL wrapper
+    zed-editor
+    
+    # Cursor Editor (with nixGL wrapper)
+    code-cursor
+    (pkgs.writeShellScriptBin "cursor-nixgl" ''
+      export SHELL=${pkgs.zsh}/bin/zsh
+      export NIXOS_OZONE_WL="1"
+      exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.code-cursor}/bin/cursor "$@"
+    '')
+
+    # Other Applications with nixGL wrapper
     (pkgs.writeShellScriptBin "ghostty" ''
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
     '')
@@ -67,8 +85,8 @@ in
     vimAlias = true;
   };
 
-  # All shell integrations (zsh, fzf, zoxide) are managed by Stow
-  # The activation script will create ~/.zshrc symlink via Stow
+  # Font configuration
+  fonts.fontconfig.enable = true;
 
   # Automatic Stow activation
   home.activation = {

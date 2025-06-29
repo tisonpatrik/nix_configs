@@ -32,11 +32,6 @@ in
     zoxide
     oh-my-posh
 
-    # Fonts
-    fontconfig
-    dejavu_fonts
-    liberation_ttf
-
     # Clang
     clang
     clang-tools
@@ -64,7 +59,7 @@ in
 	
     # Work-specific tools
     k9s
-    # awscli2
+    awscli2
     
     # Networking
     wireguard-tools
