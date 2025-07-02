@@ -73,9 +73,6 @@ in
     vimAlias = true;
   };
 
-  # Font configuration
-  fonts.fontconfig.enable = true;
-
   # Automatic Stow activation
   home.activation = {
     stowDotfiles = config.lib.dag.entryAfter ["writeBoundary"] ''
@@ -100,9 +97,6 @@ in
       fi
     '';
   };
-
-
-  home.sessionVariables = {
-    STEAM_EXTRA_COMPAT_TOOLS_PATHS = "${config.home.homeDirectory}/.steam/root/compatibilitytools.d";
-  };
 }
+
+
