@@ -20,20 +20,34 @@ system-setup: backup-shells
 	@echo "  - Add zsh to /etc/shells"
 	@echo "  - Change your default shell to zsh"
 	@echo "  - Create systemd services"
-	@read -p "Continue? (y/N): " confirm && [ "$$confirm" = "y" ]
 	sudo env PATH="$$PATH" nix --extra-experimental-features nix-command --extra-experimental-features flakes run 'github:numtide/system-manager' -- switch --flake '.#default'
 
 .PHONY: system-switch
 system-switch:
 	@echo "🔄 Re-applying system configuration..."
+	@$(MAKE) unstow
+	@$(MAKE) stow-clean
 	sudo env PATH="$$PATH" nix --extra-experimental-features nix-command --extra-experimental-features flakes run 'github:numtide/system-manager' -- switch --flake '.#default'
 
 .PHONY: clean
 clean:
 	@echo "🧹 Cleaning up old generations..."
-	@read -p "This will remove old Home Manager generations. Continue? (y/N): " confirm && [ "$$confirm" = "y" ]
 	home-manager expire-generations "-7 days"
 	nix-collect-garbage -d
+
+.PHONY: unstow
+unstow:
+	@echo "🔗 Removing all stow symlinks..."
+	cd stow-dotfiles && stow -D -t ~ zsh ohmyposh fastfetch ghostty 2>/dev/null || true
+	@echo "✅ All symlinks removed"
+
+.PHONY: stow-clean
+stow-clean:
+	@echo "🧹 Cleaning and re-stowing all dotfiles..."
+	rm -f ~/.zshrc
+	rm -rf ~/.config/zsh ~/.config/ohmyposh ~/.config/fastfetch ~/.config/ghostty
+	cd stow-dotfiles && stow -t ~ zsh ohmyposh fastfetch ghostty
+	@echo "✅ All dotfiles cleaned and re-stowed"
 
 .PHONY: build-test
 build-test:
