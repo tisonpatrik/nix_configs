@@ -1,0 +1,18 @@
+theme = catppuccin-mocha
+shell-integration = zsh
+command = "/home/patrik/.nix-profile/bin/zsh -i"
+
+# Additional configuration for better integration
+background-opacity = 0.9
+font-family = "JetBrains Mono"
+font-size = 12
+padding-x = 20
+padding-y = 20
+
+# Window configuration
+window-theme = system
+window-padding-x = 0
+window-padding-y = 0
+
+# Performance
+vsync = true 
