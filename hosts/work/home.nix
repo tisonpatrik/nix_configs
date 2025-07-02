@@ -13,23 +13,8 @@ in
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    # Version Control
-    git
 
-    # System Utilities
-    tree
-    direnv
-    bottom
-    fastfetch
-    stow
-
-    # Shell Enhancement Tools
-    zsh
-    fzf
-    zoxide
-    oh-my-posh
-
-    # Clang
+     # Clang
     clang
     clang-tools
     valgrind
@@ -95,9 +80,6 @@ in
     vimAlias = true;
   };
 
-  # Font configuration
-  fonts.fontconfig.enable = true;
-
   # Automatic Stow activation
   home.activation = {
     stowDotfiles = config.lib.dag.entryAfter ["writeBoundary"] ''
@@ -106,7 +88,7 @@ in
       # Check if the stow-dotfiles directory exists
       if [ -d "${config.home.homeDirectory}/repos/personal/nix-config/stow-dotfiles" ]; then
         cd ${config.home.homeDirectory}/repos/personal/nix-config/stow-dotfiles
-        ${pkgs.stow}/bin/stow -t ${config.home.homeDirectory} zsh ohmyposh 2>/dev/null || true
+        ${pkgs.stow}/bin/stow -t ${config.home.homeDirectory} zsh ohmyposh fastfetch 2>/dev/null || true
         echo "✅ Dotfiles stowed successfully"
       else
         echo "⚠️  Stow dotfiles directory not found, skipping setup"

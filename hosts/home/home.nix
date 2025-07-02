@@ -84,7 +84,7 @@ in
       # Check if the stow-dotfiles directory exists
       if [ -d "${config.home.homeDirectory}/repos/personal/nix-config/stow-dotfiles" ]; then
         cd ${config.home.homeDirectory}/repos/personal/nix-config/stow-dotfiles
-        ${pkgs.stow}/bin/stow -t ${config.home.homeDirectory} zsh ohmyposh 2>/dev/null || true
+        ${pkgs.stow}/bin/stow -t ${config.home.homeDirectory} zsh ohmyposh fastfetch 2>/dev/null || true
         echo "✅ Dotfiles stowed successfully"
       else
         echo "⚠️  Stow dotfiles directory not found, skipping setup"

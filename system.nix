@@ -12,6 +12,7 @@
     environment = {
       # Install system-wide packages
       systemPackages = with pkgs; [
+        git
         zsh
         fzf
         zoxide
@@ -185,5 +186,7 @@
         systemctl enable docker.service || true
       '';
     };
+
+
   };
 } 
