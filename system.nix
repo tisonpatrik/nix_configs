@@ -13,6 +13,7 @@
       # Install system-wide packages
       systemPackages = with pkgs; [
         git
+        vim
         zsh
         fzf
         zoxide
@@ -186,7 +187,5 @@
         systemctl enable docker.service || true
       '';
     };
-
-
   };
 } 

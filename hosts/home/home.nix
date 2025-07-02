@@ -62,40 +62,8 @@ in
     userName = "tisonpatrik";
     userEmail = "patriktison@gmail.com";
     extraConfig = {
-      core.editor = "nvim";
+      core.editor = "vim";
     };
-  };
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
-
-  # Automatic Stow activation
-  home.activation = {
-    stowDotfiles = config.lib.dag.entryAfter ["writeBoundary"] ''
-      echo "🔗 Setting up dotfiles with Stow..."
-
-      # Check if the stow-dotfiles directory exists
-      if [ -d "${config.home.homeDirectory}/repos/personal/nix-config/stow-dotfiles" ]; then
-        cd ${config.home.homeDirectory}/repos/personal/nix-config/stow-dotfiles
-        
-        # Clean up any existing files/directories that might conflict
-        rm -f ${config.home.homeDirectory}/.zshrc
-        rm -rf ${config.home.homeDirectory}/.config/zsh
-        rm -rf ${config.home.homeDirectory}/.config/ohmyposh
-        rm -rf ${config.home.homeDirectory}/.config/fastfetch
-        rm -rf ${config.home.homeDirectory}/.config/ghostty
-        
-        # Stow all dotfiles
-        ${pkgs.stow}/bin/stow -t ${config.home.homeDirectory} zsh ohmyposh fastfetch ghostty 2>/dev/null || true
-        echo "✅ Dotfiles stowed successfully"
-      else
-        echo "⚠️  Stow dotfiles directory not found, skipping setup"
-      fi
-    '';
   };
 }
 
