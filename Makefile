@@ -15,9 +15,9 @@ home-personal:
 .PHONY: system-switch
 system-switch:
 	@echo "🔄 Re-applying system configuration..."
+	@$(MAKE) system-apply
 	@$(MAKE) unstow
 	@$(MAKE) stow-clean
-	@$(MAKE) system-apply
 	@$(MAKE) stow-dotfiles
 
 .PHONY: system-apply

@@ -1,6 +1,17 @@
-alias awslog='aws sso login --profile infra1 && aws --profile infra1 ecr get-login-password | docker login --username AWS --password-stdin $AWS_REGISTRY_URL'
+# Source private configuration if it exists
+if [[ -f "$HOME/.config/zsh/zshrc/.private" ]]; then
+    source "$HOME/.config/zsh/zshrc/.private"
+fi
 
-alias prepare_to_develop='aws sso login --profile infra1 && aws --profile infra1 ecr get-login-password | docker login --username AWS --password-stdin $AWS_REGISTRY_URL && renew_code_artifact'
+awslog() {
+  aws sso login --profile infra1 && \
+  aws --profile infra1 ecr get-login-password | \
+  docker login --username AWS --password-stdin "$AWS_REGISTRY_URL"
+}
+
+prepare_to_develop() {
+  awslog && renew_code_artifact
+}
 
 function renew_code_artifact {
     export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token \
