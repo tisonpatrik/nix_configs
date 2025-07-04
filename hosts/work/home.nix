@@ -19,6 +19,7 @@ in
     clang-tools
     valgrind
     gdb
+    norminette
 
     # Go
     go
@@ -34,11 +35,12 @@ in
     nodejs_24
 	  yarn
 
-    # Container & Development Tools
+    # development Tools
     docker
     docker-compose
     lazydocker
     lazygit
+    
 
     # Work-specific tools
     k9s
@@ -47,9 +49,9 @@ in
     # Networking
     wireguard-tools
 
-    # Work Apps (minimal personal apps)
-    # signal-desktop  # Commented out for work setup
-
+    # Text Editors
+    zed-editor
+    neovim
     # Cursor Editor (with nixGL wrapper)
     code-cursor
     (pkgs.writeShellScriptBin "cursor-nixgl" ''

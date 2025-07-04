@@ -20,6 +20,7 @@ in
     clang-tools
     valgrind
     gdb
+    norminette
 
     # Go
     go
@@ -42,6 +43,7 @@ in
     
     # Text Editors
     zed-editor
+    neovim
 
     # Cursor Editor (with nixGL wrapper)
     code-cursor
