@@ -39,7 +39,7 @@ in
     # Work Apps (minimal personal apps)
     signal-desktop
     foliate
-    boxbuddy
+    
     
     # Text Editors
     zed-editor

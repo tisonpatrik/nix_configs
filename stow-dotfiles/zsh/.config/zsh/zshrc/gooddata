@@ -10,7 +10,7 @@ awslog() {
 }
 
 prepare_to_develop() {
-  awslog && renew_code_artifact
+  awslog && renew_code_artifact && kubelog
 }
 
 function renew_code_artifact {
@@ -21,4 +21,9 @@ function renew_code_artifact {
       --region $AWS_REGION \
       --query authorizationToken --output text)"
     echo $CODEARTIFACT_AUTH_TOKEN | tee ~/.gradle/.codeartifact-token
+}
+
+kubelog(){
+  aws sso login --profile aws-stg11 && \
+  aws eks --region us-east-1 update-kubeconfig --name stg11 --profile aws-stg11
 }

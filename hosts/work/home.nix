@@ -40,8 +40,7 @@ in
     docker-compose
     lazydocker
     lazygit
-    
-
+ 
     # Work-specific tools
     k9s
     awscli2
