@@ -11,11 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # ======================= Applications ======================= #
-    ghostty = {
-      url = "github:ghostty-org/ghostty";
-    };
-
     # ======================== Graphics ========================= #
     nixGL = {
       url = "github:guibou/nixGL";
@@ -33,7 +28,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ghostty, nixGL, zen-browser, system-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixGL, zen-browser, system-manager, ... }:
   let
     system = "x86_64-linux";
     pkgsFor = system: import nixpkgs {
@@ -51,7 +46,6 @@
           "steam-run"        # Steam FHS environment (unfree)
         ];
       };
-      overlays = [ ghostty.overlays.default ];
     };
     mkHome = sys: mods: home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsFor sys;

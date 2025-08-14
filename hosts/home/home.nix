@@ -52,11 +52,8 @@ in
       export NIXOS_OZONE_WL="1"
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.code-cursor}/bin/cursor "$@"
     '')
-
-    # Other Applications with nixGL wrapper
-    (pkgs.writeShellScriptBin "ghostty" ''
-      exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
-    '')
+    # Terminal
+    ghostty
   ];
 
   programs.git = {
