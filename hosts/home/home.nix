@@ -53,7 +53,9 @@ in
       exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.code-cursor}/bin/cursor "$@"
     '')
     # Terminal
-    ghostty
+    (pkgs.writeShellScriptBin "ghostty" ''
+      exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
+    '')
   ];
 
   programs.git = {

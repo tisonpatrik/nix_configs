@@ -60,7 +60,9 @@ in
     '')
 
     # Terminal
-    ghostty
+    (pkgs.writeShellScriptBin "ghostty" ''
+      exec ${nixGL.packages.${pkgs.system}.nixGLIntel}/bin/nixGLIntel ${pkgs.ghostty}/bin/ghostty "$@"
+    '')
   ];
 
   programs.git = {
