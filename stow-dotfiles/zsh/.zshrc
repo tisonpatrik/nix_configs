@@ -23,3 +23,5 @@ for f in $HOME/.config/zsh/zshrc/*; do
         [[ -f $c ]] && source $c || source $f
     fi
 done 
+
+export PATH=/home/patrik/.opencode/bin:$PATH
