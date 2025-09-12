@@ -4,11 +4,13 @@
 .PHONY: home-work
 home-work:
 	@echo "🏢 Switching to work profile..."
+	@$(MAKE) update-flake
 	home-manager switch --flake .#patrik@work
 
 .PHONY: home-personal
 home-personal:
 	@echo "🏠 Switching to personal profile..."
+	@$(MAKE) update-flake
 	home-manager switch --flake .#patrik@home
 
 
