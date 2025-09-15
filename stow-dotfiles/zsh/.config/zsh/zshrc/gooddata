@@ -3,6 +3,9 @@ if [[ -f "$HOME/.config/zsh/zshrc/.private" ]]; then
     source "$HOME/.config/zsh/zshrc/.private"
 fi
 
+# Java options for GoodData development
+export JAVA_OPTS="-Xmx1g --add-opens=java.base/sun.net=ALL-UNNAMED"
+
 awslog() {
   aws sso login --profile infra1 && \
   aws --profile infra1 ecr get-login-password | \
@@ -15,7 +18,7 @@ prepare_to_develop() {
 
 function renew_code_artifact {
     export CODEARTIFACT_AUTH_TOKEN="$(aws codeartifact get-authorization-token \
-      --profile infra1 \
+      --profile infra1 \de
       --domain infra1 \
       --domain-owner $AWS_ACCOUNT_ID \
       --region $AWS_REGION \
