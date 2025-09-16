@@ -4,7 +4,7 @@ if [[ -f "$HOME/.config/zsh/zshrc/.private" ]]; then
 fi
 
 # Java options for GoodData development
-export JAVA_OPTS="-Xmx1g --add-opens=java.base/sun.net=ALL-UNNAMED"
+export JAVA_OPTS="-Xmx1g --add-opens=java.base/sun.net=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED"
 
 awslog() {
   aws sso login --profile infra1 && \
@@ -29,4 +29,18 @@ function renew_code_artifact {
 kubelog(){
   aws sso login --profile aws-stg11 && \
   aws eks --region us-east-1 update-kubeconfig --name stg11 --profile aws-stg11
+}
+
+start_platform() {
+  echo "Building Docker images..."
+  docker compose build
+  
+  echo "Starting core services..."
+  docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml up -d pulsar-create-namespace postgres redis router
+  
+  echo "Starting remaining services..."
+  docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml --profile ai config --services | grep -Ev 'metadata-organization-bootstrap|create-ds|metadata-api-store-model' | xargs docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml up -d
+  
+  echo "Starting gen-ai service with watch..."
+  docker compose up --build --watch gen-ai
 }
