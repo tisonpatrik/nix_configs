@@ -26,9 +26,15 @@
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # ====================== Development Tools ===================== #
+    c-formatter-42 = {
+      url = "github:maix-flake/c_formatter_42";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixGL, zen-browser, system-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, nixGL, zen-browser, system-manager, c-formatter-42, ... }:
   let
     system = "x86_64-linux";
     pkgsFor = system: import nixpkgs {
@@ -49,7 +55,7 @@
     };
     mkHome = sys: mods: home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsFor sys;
-      extraSpecialArgs = { inherit nixGL zen-browser; };
+      extraSpecialArgs = { inherit nixGL zen-browser c-formatter-42; };
       modules = mods;
     };
   in {

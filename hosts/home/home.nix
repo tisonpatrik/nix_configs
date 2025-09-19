@@ -1,4 +1,4 @@
-{ config, pkgs, nixGL, zen_browser, ... }:
+{ config, pkgs, nixGL, zen_browser, c-formatter-42, ... }:
 
 let
   pythonWithPip = pkgs.python3.withPackages (ps: with ps; [ pip ]);
@@ -21,6 +21,7 @@ in
     valgrind
     gdb
     norminette
+    c-formatter-42.packages.${pkgs.system}.default
 
     # Go
     go
