@@ -34,11 +34,11 @@ kubelog(){
 }
 
 start_platform() {
-  docker compose build && \
-  docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml up -d pulsar-create-namespace postgres redis router && \
+  docker compose build && sleep 3 && \
+  docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml up -d pulsar-create-namespace postgres redis router && sleep 3 && \
   docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml --profile ai config --services \
     | grep -Ev 'metadata-organization-bootstrap|create-ds|metadata-api-store-model' \
-    | xargs docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml up -d && \
-  docker compose up metadata-api-store-model --remove-orphans && \
+    | xargs docker compose -f docker-compose.yaml -f docker-compose-monitoring.yaml up -d && sleep 3 && \
+  docker compose up metadata-api-store-model --remove-orphans && sleep 3 && \
   docker compose up --build --watch gen-ai
 }
