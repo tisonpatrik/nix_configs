@@ -6,6 +6,9 @@ cursor() {
   disown
 }
 
+function reload {
+  source ~/.zshrc
+}
 
 # Docker purge function - completely clean Docker system
 function docker_purge {

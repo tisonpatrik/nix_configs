@@ -1,0 +1,21 @@
+# Neovim configuration aliases and functions
+# This file provides aliases and functions for managing multiple Neovim configurations
+
+# Aliases for different Neovim configurations
+alias nvim-42="NVIM_APPNAME=nvim-42 nvim"
+
+# Interactive Neovim configuration selector
+function nvims() {
+  items=("default" "nvim-42")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt="\ue62b Neovim Config \uf63d " --height=~50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
+
+# Bind Ctrl+A to launch the Neovim selector
+bindkey -s ^a "nvims\n"
