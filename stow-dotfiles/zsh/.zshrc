@@ -25,5 +25,3 @@ for f in $HOME/.config/zsh/zshrc/*; do
 done 
 
 export PATH=/home/patrik/.opencode/bin:$PATH
-
-
