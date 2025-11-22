@@ -25,8 +25,8 @@ in
     # Go
     go
     buf
-    air
     gopls
+    sqlc
 
 	  # Python
     pythonWithPip
